@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "../styles/Counter.css";
 
 type Props = {
   initial?: number;

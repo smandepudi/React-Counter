@@ -1,16 +1,33 @@
-// import { useState } from 'react'
 import "./App.css";
-import Counter from "./components/Counter"
+import { Routes, Route, Navigate } from "react-router-dom";
+import Tabs from "./components/Tabs";
+import HomePage from "./pages/HomePage"
+import CounterPage from "./pages/CounterPage";
+import TodoPage from "./pages/TodoPage";
 
 function App() {
+  const tabs = [
+    { name: "Home", path: "/home" },
+    { name: "Counter", path: "/counter" },
+    { name: "Todo", path: "/todo" },
+  ];
 
   return (
-    <main className="header">
-      <h1>Day 1 - react Basics</h1>
-      <p>Let's build a tiny counter.</p>
-      <Counter/>
-      <Counter step={5} initial={5}/>
-    </main>
+    <div className="app-container">
+      <h1>React Basics</h1>
+      <p>Navigate between the tabs below</p>
+
+      <Tabs tabs={tabs} />
+      <main>
+        <Routes>
+          {/* redirect root to your default page */}
+          <Route path="/" element={<HomePage />} />
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/counter" element={<CounterPage />} />
+          <Route path="/todo" element={<TodoPage />} />
+        </Routes>
+      </main>
+    </div>
   );
 }
 

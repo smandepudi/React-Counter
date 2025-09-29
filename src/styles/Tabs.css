@@ -1,0 +1,13 @@
+.tab-button {
+  padding: 10px 20px;
+  text-decoration: none;
+  color: gray;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.tab-button.active {
+  color: black;
+  border-bottom: 2px solid #007bff; /* Blue underline for active tab */
+  font-weight: bold;
+}
