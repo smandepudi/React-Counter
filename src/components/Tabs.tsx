@@ -13,7 +13,7 @@ type TabsProps = {
 
 const Tabs: React.FC<TabsProps> = ({ tabs }) => {
   return (
-    <nav className="tabs" aria-label="Main navigation">
+    <nav className="flex border-b border-gray-300 mb-4" aria-label="Main navigation">
       {tabs.map((tab) => (
         <NavLink
           key={tab.path}
