@@ -20,7 +20,7 @@ const Tabs: React.FC<TabsProps> = ({ tabs }) => {
           to={tab.path}
           className={({ isActive }) => `tab-button ${isActive ? "active" : ""}`}
         >
-          {tab.name}
+          {tab.name} Sindhu
         </NavLink>
       ))}
     </nav>
