@@ -1,6 +1,7 @@
-import { NavLink } from "react-router-dom";
 import "../styles/Tabs.css";
 import React from "react";
+import { Tabs, Tab, AppBar, Toolbar } from "@mui/material";
+import { useNavigate, useLocation } from "react-router-dom";
 
 type Tab = {
   name: string;
@@ -12,27 +13,28 @@ type TabsProps = {
 };
 
 const Tabs: React.FC<TabsProps> = ({ tabs }) => {
+  const currentTab = tabs.findIndex((tab) => tab.path === location.pathname);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const handleChange = (_: React.SyntheticEvent, newValue: number) => {
+    navigate(tabs[newValue].path);
+  };
+
   return (
-    <nav
-      className="flex border-b border-gray-300 mb-4"
-      aria-label="Main navigation"
-    >
-      {tabs.map((tab) => (
-        <NavLink
-          key={tab.path}
-          to={tab.path}
-          className={({ isActive }) =>
-            `px-4 py-2 font-medium -mb-px border-b-2 ${
-              isActive
-                ? "border-blue-500 text-blue-600"
-                : "border-transparent text-gray-700 hover:text-blue-500"
-            }`
-          }
+    <AppBar position="static" color="default" elevation={1}>
+      <Toolbar>
+        <Tabs
+          value={currentTab !== -1 ? currentTab : 0}
+          onChange={handleChange}
+          indicatorColor="primary"
+          textColor="primary"
         >
-          {tab.name}
-        </NavLink>
-      ))}
-    </nav>
+          {tabs.map((tab) => (
+            <Tab key={tab.path} label={tab.name} />
+          ))}
+        </Tabs>
+      </Toolbar>
+    </AppBar>
   );
 };
 export default Tabs;
