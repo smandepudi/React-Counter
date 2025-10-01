@@ -12,7 +12,7 @@ type TabsProps = {
   tabs: Tab[];
 };
 
-const Tabs: React.FC<TabsProps> = ({ tabs }) => {
+const NavTabs: React.FC<TabsProps> = ({ tabs }) => {
   const currentTab = tabs.findIndex((tab) => tab.path === location.pathname);
   const navigate = useNavigate();
   const location = useLocation();
@@ -37,4 +37,4 @@ const Tabs: React.FC<TabsProps> = ({ tabs }) => {
     </AppBar>
   );
 };
-export default Tabs;
+export default NavTabs;
