@@ -1,8 +1,7 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react-swc";
 
-// https://vite.dev/config/
-export default defineConfig({
+export default defineConfig(({ command }) => ({
   plugins: [react()],
-  base: '/React-Counter/'   // <-- Add this linenpm run build
-})
+  base: command === "build" ? "/React-Counter/" : "/", // ✅ dev uses "/", prod uses repo name
+}));

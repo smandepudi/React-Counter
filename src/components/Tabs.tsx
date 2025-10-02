@@ -1,40 +1,36 @@
-import "../styles/Tabs.css";
 import React from "react";
-import { Tabs, Tab, AppBar, Toolbar } from "@mui/material";
+import { Tabs, Tab } from "@mui/material";
 import { useNavigate, useLocation } from "react-router-dom";
 
-type Tab = {
+type TabInfo = {
   name: string;
   path: string;
 };
 
-type TabsProps = {
-  tabs: Tab[];
+type NavTabsProps = {
+  tabs: TabInfo[];
 };
 
-const NavTabs: React.FC<TabsProps> = ({ tabs }) => {
-  const currentTab = tabs.findIndex((tab) => tab.path === location.pathname);
+export default function NavTabs({ tabs }: NavTabsProps) {
   const navigate = useNavigate();
   const location = useLocation();
+
+  const currentTabIndex = tabs.findIndex(
+    (tab) => tab.path === location.pathname
+  );
+
   const handleChange = (_: React.SyntheticEvent, newValue: number) => {
     navigate(tabs[newValue].path);
   };
 
   return (
-    <AppBar position="static" color="default" elevation={1}>
-      <Toolbar>
-        <Tabs
-          value={currentTab !== -1 ? currentTab : 0}
-          onChange={handleChange}
-          indicatorColor="primary"
-          textColor="primary"
-        >
-          {tabs.map((tab) => (
-            <Tab key={tab.path} label={tab.name} />
-          ))}
-        </Tabs>
-      </Toolbar>
-    </AppBar>
+    <Tabs
+      value={currentTabIndex === -1 ? 0 : currentTabIndex}
+      onChange={handleChange}
+    >
+      {tabs.map((tab) => (
+        <Tab key={tab.path} label={tab.name} />
+      ))}
+    </Tabs>
   );
-};
-export default NavTabs;
+}
