@@ -5,8 +5,6 @@ import { setFilter } from "../store/todosSlice";
 export default function TodoFilter() {
 
   const filterOptions = useSelector((state: RootState) => state.todos.filter);
-  console.log("Current Filter:", filterOptions);
-
   const dispatch = useDispatch();
   return (
     <Box sx={{ borderBottom: 1, borderColor: "divider", mb: 2 }}>

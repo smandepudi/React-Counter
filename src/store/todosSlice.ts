@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface TodosState {
-  todos: { id: number; text: string; completed: boolean }[];
+  todos: { id: number; text: string; completed: boolean, priority: "Low" | "Medium" | "High", dueDate: string }[];
   filter: "all" | "active" | "completed";
 }
 
@@ -14,11 +14,13 @@ export const todosSlice = createSlice({
   name: "todos",
   initialState,
   reducers: {
-    addTodo: (state, action: PayloadAction<string>) => {
+    addTodo: (state, action: PayloadAction<{text: string; priority: string; dueDate: string}>) => {
       const newTodo: Todo = {
         id: Date.now(),
-        text: action.payload,
+        text: action.payload.text,
         completed: false,
+        priority: action.payload.priority || "Medium",
+        dueDate: action.payload.dueDate,
       };
       state.todos.push(newTodo);
     },

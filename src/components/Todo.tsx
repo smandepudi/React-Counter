@@ -9,21 +9,30 @@ export type Todo = {
   id: number;
   text: string;
   completed: boolean;
+  priority: "Low" | "Medium" | "High";
+  dueDate: string;
 };
 
 export default function Todo() {
-
   const [filter, setFilter] = useState<"all" | "completed" | "active">("all");
 
   return (
     <Container maxWidth="sm" sx={{ mt: 4 }}>
-      <Paper sx={{ p: 3 }}>
+      <Paper
+        elevation={4}
+        sx={{
+          p: 3,
+          borderRadius: 3,
+          bgcolor: "background.paper",
+          boxShadow: "0 3px 10px rgba(0,0,0,0.1)",
+        }}
+      >
         <Typography variant="h4" gutterBottom>
           My Todos
         </Typography>
-        <TodoInput/>
+        <TodoInput />
         <TodoFilter filter={filter} setFilter={setFilter} />
-        <TodoList/>
+        <TodoList />
       </Paper>
     </Container>
   );
