@@ -5,14 +5,6 @@ import TodoInput from "./TodoInput";
 import TodoList from "./TodoList";
 import TodoFilter from "./TodoFilter";
 
-export type Todo = {
-  id: number;
-  text: string;
-  completed: boolean;
-  priority: "Low" | "Medium" | "High";
-  dueDate: string;
-};
-
 export default function Todo() {
   const [filter, setFilter] = useState<"all" | "completed" | "active">("all");
 
