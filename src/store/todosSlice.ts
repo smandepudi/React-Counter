@@ -24,6 +24,16 @@ export const todosSlice = createSlice({
       };
       state.todos.push(newTodo);
     },
+    saveOnEdit: (state, action: PayloadAction<{id: number, text: string}>) => {
+      const editedToDo: Todo = {
+        id: action.payload.id,
+        text: action.payload.text
+      };
+      const index = state.todos.findIndex((t) => t.id === action.payload.id);
+      if (index !== -1) {  
+        state.todos[index] = {...state.todos[index], ...editedToDo};
+      }
+    },
     deleteTodo: (state, action: PayloadAction<number>) => {
       state.todos = state.todos.filter((todo) => todo.id !== action.payload);
     },
@@ -42,7 +52,7 @@ export const todosSlice = createSlice({
   },
 });
 
-export const { addTodo, deleteTodo, toggleTodo, setFilter } = todosSlice.actions;
+export const { addTodo, deleteTodo, saveOnEdit, toggleTodo, setFilter } = todosSlice.actions;
 
 // Selectors
 export const selectTodos = (state: RootState) => state.todos.todos;
