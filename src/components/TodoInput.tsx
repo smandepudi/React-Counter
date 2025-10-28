@@ -9,7 +9,8 @@ import {
   Select,
   InputLabel,
 } from "@mui/material";
-import { addTodo } from "../store/todosSlice";
+import { addTodoAsync } from "../store/todosSlice";
+import { AppDispatch } from "../store";
 
 export default function TodoInput() {
   const today = new Date().toISOString().split("T")[0]; // "YYYY-MM-DD"
@@ -18,12 +19,12 @@ export default function TodoInput() {
   const [priority, setPriority] = useState<"Low" | "Medium" | "High">("Medium");
   const [dueDate, setDueDate] = useState(today);
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (input.trim()) {
-      dispatch(addTodo({ text: input.trim(), priority, dueDate }));
+      dispatch(addTodoAsync({ text: input.trim(), priority, dueDate }));
       setInput("");
       setPriority("Medium");
       setDueDate(new Date().toISOString().split("T")[0]); // reset to today

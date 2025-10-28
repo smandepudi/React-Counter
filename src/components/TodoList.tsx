@@ -2,8 +2,9 @@ import React from "react";
 import { useState } from "react";
 import { Box, Typography } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-import { toggleTodo, deleteTodo, saveOnEdit } from "../store/todosSlice"; // <-- import here
+import { toggleTodoAsync, deleteTodoAsync, updateTodoAsync } from "../store/todosSlice";
 import { selectFilteredTodos } from "../store/todosSlice";
+import { AppDispatch } from "../store";
 
 import {
   Card,
@@ -16,7 +17,7 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 
 export default function TodoList() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const todos = useSelector(selectFilteredTodos);
 
@@ -25,16 +26,17 @@ export default function TodoList() {
   const [editText, setEditText] = useState("");
 
   console.log("Todos:", todos);
+  
   const handleEdit = (todo: any) => {
     setEditingId(todo.id);
     setEditText(todo.text);
   };
+  
   const handleSave = (id: number) => {
     if (editText.trim() === "") return;
-    dispatch(saveOnEdit({ id, text: editText }));
+    dispatch(updateTodoAsync({ id, text: editText }));
     setEditingId(null);
   };
-
 
   if (todos.length === 0) return <p>No todos yet!</p>;
 
@@ -62,7 +64,7 @@ export default function TodoList() {
             {/* Left: Checkbox + text + secondary info */}
             <Checkbox
               checked={todo.completed}
-              onChange={() => dispatch(toggleTodo(todo.id))}
+              onChange={() => dispatch(toggleTodoAsync(todo.id))}
               inputProps={{ "aria-label": `toggle todo ${todo.text}` }}
             />
             <CardContent
@@ -94,6 +96,7 @@ export default function TodoList() {
                     sx={{
                       textDecoration: todo.completed ? "line-through" : "none",
                       fontWeight: 500,
+                      cursor: "pointer",
                     }}
                   >
                     {todo.text}
@@ -130,7 +133,7 @@ export default function TodoList() {
             <CardActions>
               <IconButton
                 aria-label="delete todo"
-                onClick={() => dispatch(deleteTodo(todo.id))}
+                onClick={() => dispatch(deleteTodoAsync(todo.id))}
               >
                 <DeleteIcon />
               </IconButton>
