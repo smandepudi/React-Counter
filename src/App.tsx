@@ -9,8 +9,8 @@ import TodoPage from "./pages/TodoPage";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import { ThemeContext } from "./context/ThemeContext";
-import { IconButton, Button, Box} from "@mui/material";
-
+import { IconButton, Button, Box } from "@mui/material";
+import { Toaster } from "react-hot-toast"; // ← Add this import
 
 const tabList = [
   { name: "Home", path: "/home" },
@@ -60,6 +60,29 @@ function App() {
   // Logged in - show your app with sign out button
   return (
     <>
+      {/* Add Toaster here - it will show toasts across your entire app */}
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          duration: 3000,
+          style: {
+            background: mode === "dark" ? "#333" : "#fff",
+            color: mode === "dark" ? "#fff" : "#333",
+          },
+          success: {
+            iconTheme: {
+              primary: "#10b981",
+              secondary: "#fff",
+            },
+          },
+          error: {
+            iconTheme: {
+              primary: "#ef4444",
+              secondary: "#fff",
+            },
+          },
+        }}
+      />
       <div
         className="flex justify-between items-center px-4 py-2 bg-gray-100"
         style={{
@@ -69,7 +92,7 @@ function App() {
         }}
       >
         <NavTabs tabs={tabList} />
-        <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', pr: 1.25 }}>
+        <Box sx={{ display: "flex", gap: 1, alignItems: "center", pr: 1.25 }}>
           <IconButton onClick={toggleTheme} color="inherit">
             {mode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
           </IconButton>

@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { supabase } from "../lib/supabase";
 import type { RootState } from "./store";
+import toast from "react-hot-toast";  // ← Add this import
 
 interface Todo {
   id: number;
@@ -74,6 +75,7 @@ export const addTodoAsync = createAsyncThunk(
       .single();
 
     if (error) throw error;
+    toast.success("Todo added successfully! ✓");  // ← Add toast
 
     return {
       id: data.id,
@@ -98,6 +100,8 @@ export const updateTodoAsync = createAsyncThunk(
       .single();
 
     if (error) throw error;
+    toast.success("Todo updated! ✓");  // ← update toast
+
     return data;
   }
 );
@@ -124,6 +128,9 @@ export const toggleTodoAsync = createAsyncThunk(
       .single();
 
     if (error) throw error;
+     if (!todo.completed) {
+      toast.success("Task completed! 🎉");  // ← Add toast
+    }
     return data;
   }
 );
