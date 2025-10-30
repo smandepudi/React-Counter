@@ -13,6 +13,7 @@ Live App: https://react-counter-mu-nine.vercel.app/#/todo
 🔍 Smart Filtering - View all todos, active only, or completed only
 ✏️ Inline Editing - Click on any todo to edit it directly
 📱 Responsive Design - Works seamlessly on desktop and mobile devices
+- 🤖 **AI-Powered Task Breakdown** - Smart suggestions to break complex tasks into actionable subtasks
 
 🛠️ Tech Stack
 Frontend:
@@ -22,6 +23,8 @@ Redux Toolkit for state management
 Material-UI (MUI) for UI components
 React Router for navigation
 Vite for build tooling
+OpenAI API for intelligent task suggestions
+
 
 Backend & Database:
 
