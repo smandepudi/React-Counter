@@ -4,7 +4,7 @@ import { Box, Typography } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleTodoAsync, deleteTodoAsync, updateTodoAsync } from "../store/todosSlice";
 import { selectFilteredTodos } from "../store/todosSlice";
-import { AppDispatch } from "../store";
+// import { AppDispatch } from "../store";
 
 import {
   Card,
