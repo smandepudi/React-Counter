@@ -5,23 +5,15 @@ import "./index.css";
 import { store } from "./store";
 import { HashRouter } from "react-router-dom";
 import App from "./App.tsx";
-import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
-
-const theme = createTheme({
-  palette: {
-    primary: { main: "#1976d2" }, // blue
-    secondary: { main: "#dc004e" }, // red/pink
-  },
-});
+import { CustomThemeProvider } from "./context/ThemeContext";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <HashRouter>
       <Provider store={store}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
+        <CustomThemeProvider>
           <App />
-        </ThemeProvider>
+        </CustomThemeProvider>
       </Provider>
     </HashRouter>
   </StrictMode>

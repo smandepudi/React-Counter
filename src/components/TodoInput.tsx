@@ -11,13 +11,13 @@ import {
   InputLabel,
   Tooltip,
   IconButton,
-  CircularProgress,  // ← ADD THIS
-  Chip,              // ← ADD THIS
-  Stack,             // ← ADD THIS
+  CircularProgress, // ← ADD THIS
+  Chip, // ← ADD THIS
+  Stack, // ← ADD THIS
 } from "@mui/material";
 import { addTodoAsync } from "../store/todosSlice";
 // import { AppDispatch } from "../store";
-import { breakdownTask } from "../lib/openai";  // ← ADD THIS
+import { breakdownTask } from "../lib/openai"; // ← ADD THIS
 
 export default function TodoInput() {
   const today = new Date().toISOString().split("T")[0]; // "YYYY-MM-DD"
@@ -28,9 +28,8 @@ export default function TodoInput() {
   const [aiSuggestions, setAiSuggestions] = useState<string[]>([]);
   const [isLoadingAI, setIsLoadingAI] = useState(false);
 
-//   const dispatch = useDispatch<AppDispatch>();
+  //   const dispatch = useDispatch<AppDispatch>();
   const dispatch = useDispatch<any>();
-
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -70,14 +69,9 @@ export default function TodoInput() {
     setInput("");
   };
 
-
   return (
     <Box sx={{ mb: 2 }}>
-      <Box
-        component="form"
-        onSubmit={handleSubmit}
-        sx={{ display: "flex", mb: 2, gap: 2 }}
-      >
+      <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
         <TextField
           fullWidth
           variant="outlined"
@@ -107,6 +101,12 @@ export default function TodoInput() {
             </IconButton>
           </span>
         </Tooltip>
+      </Box>
+      <Box
+        component="form"
+        onSubmit={handleSubmit}
+        sx={{ display: "flex", mb: 2, gap: 8 }}
+      >
         <FormControl size="small" sx={{ minWidth: 100 }}>
           <InputLabel id="priority_label">Priority</InputLabel>
           <Select
