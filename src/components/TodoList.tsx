@@ -1,9 +1,13 @@
 import React from "react";
 import { useState } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Skeleton } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-import { toggleTodoAsync, deleteTodoAsync, updateTodoAsync } from "../store/todosSlice";
-import { selectFilteredTodos } from "../store/todosSlice";
+import {
+  toggleTodoAsync,
+  deleteTodoAsync,
+  updateTodoAsync,
+} from "../store/todosSlice";
+import { selectFilteredTodos, selectLoading } from "../store/todosSlice";
 // import { AppDispatch } from "../store";
 
 import {
@@ -12,37 +16,88 @@ import {
   CardActions,
   IconButton,
   Checkbox,
-  TextField
+  TextField,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-export default function TodoList() {
+interface TodoListProps {
+  searchQuery: string; // ← Define the prop type
+}
+export default function TodoList({ searchQuery }: TodoListProps) {
   const dispatch = useDispatch<AppDispatch>();
 
   const todos = useSelector(selectFilteredTodos);
+  const loading = useSelector(selectLoading);
 
   // Track which todo is being edited
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editText, setEditText] = useState("");
 
   console.log("Todos:", todos);
-  
+
+  // ← Use it to filter todos
+  const searchedTodos = todos.filter((todo) =>
+    todo.text.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   const handleEdit = (todo: any) => {
     setEditingId(todo.id);
     setEditText(todo.text);
   };
-  
+
   const handleSave = (id: number) => {
     if (editText.trim() === "") return;
     dispatch(updateTodoAsync({ id, text: editText }));
     setEditingId(null);
   };
 
-  if (todos.length === 0) return <p>No todos yet!</p>;
+  if (todos.length === 0 && !loading) return <p>No todos yet!</p>;
+
+  // Show skeleton loading state
+  if (loading) {
+    return (
+      <Box display="flex" flexDirection="column" gap={2}>
+        {[1, 2, 3].map((n) => (
+          <Card
+            key={n}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              padding: 2,
+              borderRadius: 2,
+            }}
+          >
+            <Skeleton
+              variant="circular"
+              width={40}
+              height={40}
+              sx={{ mr: 2 }}
+            />
+            <Box sx={{ flex: 1 }}>
+              <Skeleton variant="text" width="60%" height={24} />
+              <Skeleton variant="text" width="40%" height={20} />
+            </Box>
+            <Skeleton variant="circular" width={40} height={40} />
+          </Card>
+        ))}
+      </Box>
+    );
+  }
+  if (searchedTodos.length === 0) {
+    return (
+      <Box sx={{ textAlign: "center", py: 4 }}>
+        <Typography variant="body1" color="text.secondary">
+          {searchQuery
+            ? `No todos found for "${searchQuery}"`
+            : "No todos yet!"}
+        </Typography>
+      </Box>
+    );
+  }
 
   return (
     <Box display="flex" flexDirection="column" gap={2}>
-      {todos.map((todo) => {
+      {searchedTodos.map((todo) => {
         const isEditing = editingId === todo.id;
         return (
           <Card
